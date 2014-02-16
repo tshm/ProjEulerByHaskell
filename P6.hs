@@ -1,4 +1,4 @@
-module P4 where
+module P6 where
 -- |
 -- >>> diffSumSqAndSqSum 10
 -- 2640
@@ -6,7 +6,8 @@ module P4 where
 -- >>> diffSumSqAndSqSum 100
 --
 
-diffSumSqAndSqSum n = sqSum - sumSq where
-  sqSum = (sum [ x | x <- [1..n] ]) ^ 2
-  sumSq = sum [ x^2 | x <- [1..n] ]
+-- realizing ...
+-- (x + y)^2 - x^2 - y^2 = xy + yx
+diffSumSqAndSqSum n =
+  sum [ x * y | x <- [1..n], y <- [1..n], x /= y ]
 
