@@ -1,0 +1,4 @@
+ProjEulerByHaskell
+==================
+
+just an excercise
