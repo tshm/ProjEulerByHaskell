@@ -1,8 +1,9 @@
-module P13 where
+module Main where
 -- Work out the first ten digits of the sum of the
 -- following one-hundred 50-digit numbers.
 --
 
+nums :: [Integer]
 nums = [
   37107287533902102798797998220837590246510135740250,
   46376937677490009712648124896970078050417018260538,
@@ -105,6 +106,5 @@ nums = [
   20849603980134001723930671666823555245252804609722,
   53503534226472524250874054075591789781264330331690]
 
-main = do
-  print $ foldr1 (+) nums
-  print $ take 10 $ show $ foldr1 (+) nums
+main :: IO ()
+main = print $ take 10 $ show $ foldr1 (+) nums

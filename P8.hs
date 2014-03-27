@@ -1,4 +1,5 @@
-module P8 where
+module Main where
+list :: String
 list = foldl (++) "" [
   "73167176531330624919225119674426574742355349194934",
   "96983520312774506326239578318016984801869478851843",
@@ -21,12 +22,12 @@ list = foldl (++) "" [
   "05886116467109405077541002256983155200055935729725",
   "71636269561882670428252483600823257530420752963450"]
 
+nums :: [String]
 nums = map (\n -> take 5 $ drop n list) [0..(length list)-5]
 
-mult5 xs = foldr (\c acc -> acc * (read (c:"") :: Int)) 1 xs
+mult5 :: String -> Int
+mult5 = foldr (\c acc -> acc * (read (c:"") :: Int)) 1
 
-ans = maximum $ map mult5 nums
-
-main = do
-  print ans
+main :: IO ()
+main = print $ maximum $ map mult5 nums
 

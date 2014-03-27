@@ -1,6 +1,4 @@
-module P31 where
 import Data.Array
-
 -- |
 -- >>> ways 5 1
 -- 3
@@ -10,8 +8,6 @@ import Data.Array
 --
 -- >>> ways 5 2
 -- 4
---
--- >>> ways 200 $ (length coins) -1
 
 coins :: [Int]
 coins = [1,2,5,10,20,50,100,200]
@@ -25,3 +21,6 @@ ways tot ci = r ! (tot, ci) where
   w t k | t < 0      = 0
         | otherwise  = r ! (t, k-1) + w (t - coins !! k) k
 
+main :: IO ()
+main = do
+  print $ ways 200 $ (length coins) -1

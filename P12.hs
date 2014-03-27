@@ -1,4 +1,4 @@
-module P12 where
+module Main where
 import Data.List
 
 -- |
@@ -31,23 +31,28 @@ import Data.List
 --
 -- >>> find (\x -> 5 < factorNumber x) [triangleNumber x| x<- [2..]]
 -- Just 28
---
--- >>> find (\x -> 500 < factorNumber x) [triangleNumber x| x<- [2..]]
---
 
-triangleNumber n = floor $ n * (n+1) / 2
+
+triangleNumber :: Integer -> Integer
+triangleNumber n = floor $ m * (m+1) / 2 where
+  m = fromInteger n :: Double
 
 -- slow way...
+factors :: Integer -> [Integer]
 factors n = [ m | m <- [1..n], n `mod` m == 0 ]
 
 -- faster...
+factorNumber :: Integer -> Integer
 factorNumber n = foldr (*) 1 $ map (1+) $ ranks n where
-   ranks m = map length $ group $ primeFactors m
+   ranks m = map (toInteger . length) $ group $ primeFactors $ m
 
-primeFactors :: (Integral a) => a -> [a]
+primeFactors :: Integer -> [Integer]
 primeFactors n = pfact 2 n where
-  pfact p n
-    | n < p           = []
-    | n `mod` p == 0  = p : (pfact p $ n `quot` p)
-    | otherwise       = pfact (p+1) n
+  pfact p n'
+    | n' < p           = []
+    | n' `mod` p == 0  = p : (pfact p $ n' `quot` p)
+    | otherwise       = pfact (p+1) n'
+
+main :: IO ()
+main = print $ find (\x -> 500 < factorNumber x) [triangleNumber x| x<- [2..]]
 

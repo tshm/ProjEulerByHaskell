@@ -1,7 +1,10 @@
-module P11 where
+module Main where
 import Text.Regex
 
+splitNum :: String -> [Int]
 splitNum t = map (\s -> read s :: Int) $ (splitRegex (mkRegex " ")) t
+
+grid :: [[Int]]
 grid = map splitNum [
   "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08",
   "49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00",
@@ -24,22 +27,28 @@ grid = map splitNum [
   "20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54",
   "01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48"]
 
+value :: Int -> Int -> Int
 value i j
   | elem i [0..19] && elem j [0..19]  = (grid !! i) !! j
   | otherwise  = 0
 
+range2d :: [([Int],[Int])]
 range2d = [([0,0,0,0],[0,1,2,3]),
            ([0,1,2,3],[0,1,2,3]),
            ([0,1,2,3],[0,0,0,0]),
            ([0,1,2,3],[0,-1,-2,-3])]
 
+f :: (Int,Int) -> [Int]
 f (i,j) = map (mult . poke) range2d where
   poke (xs, ys) = zipWith (\x y -> value (i+x) (j+y)) xs ys
   mult = foldr (*) 1
+
+grid2 :: [[Int]]
 grid2 = map f [(i,j) | i <- [0..19], j <- [0..19]]
+
+grid3 :: [Int]
 grid3 = map maximum grid2
 
-main = do
-  --foldl (\acc x -> acc >> print x) (print 0) grid2
-  print $ maximum grid3
+main :: IO ()
+main = print $ maximum grid3
 

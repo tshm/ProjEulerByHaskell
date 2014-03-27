@@ -1,4 +1,4 @@
-module P14 where
+module Main where
 import Data.Array
 
 -- The following iterative sequence is defined for the set of positive integers:
@@ -21,28 +21,36 @@ import Data.Array
 -- >>> collatz 13
 -- [13,40,20,10,5,16,8,4,2,1]
 --
--- >>> findMax (collatzLen 1000000) 1000000
+-- >>> (collatzLen 13) ! 13
+-- 10
+--
+-- >> maximumBy snd $ assocs $ (collatzLen 1000000)
+-- >>> findMax (collatzLen 100)
+-- (97,119)
+--
+-- 837799
 
-findMax arr n = let
-  val = foldr (\i (k,v) -> if (arr!i) > v then (i,arr!i) else (k,v)) (1,1) [1..n]
-  in val
+nextSeq :: Integer -> Integer
+nextSeq k
+  | even k     = k `quot` 2
+  | otherwise  = 3 * k + 1
 
-
-collatzLen n = r where
-  r = array (1, 2*n) [(k, len k) | k <- [1..2*n]]
-  len 1 = 1
-  len k = 1 + (lookup (next k)) where
-    next k
-      | k `mod` 2 == 0  = k `quot` 2
-      | otherwise       = 3 * k + 1
-  lookup k
-    | k < n     = r ! k
-    | otherwise = len k
-
-collatz :: Int -> [Int]
+collatz :: Integer -> [Integer]
 collatz 1 = [1]
-collatz n = n : (collatz $ next n) where
-  next n
-    | n `mod` 2 == 0  = n `quot` 2
-    | otherwise       = 3 * n + 1
+collatz n = n : (collatz $ nextSeq n)
 
+collatzLen :: Integer -> Array Integer Integer
+collatzLen n = r where
+  r = array (1, n) [(k, len k) | k <- [1..n]]
+  len k
+    | k == 1     = 1
+    | k' < n     = 1 + r ! k'
+    | otherwise  = 1 + len k'
+    where k' = nextSeq k
+
+findMax :: Array Integer Integer -> (Integer, Integer)
+findMax arr = foldl1 max' $ assocs arr where
+  max' x y = if snd x > snd y then x else y
+
+main :: IO ()
+main = print $ "(index, value) = " ++ show (findMax (collatzLen 1000000))
