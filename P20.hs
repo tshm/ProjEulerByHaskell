@@ -1,7 +1,9 @@
-module P20 where
+module Main where
 
-ans n = foldr1 (+) $ map (\c -> read [c] :: Int) $ show $ fact n where
-  fact n = foldr1 (*) [1..n]
+ans :: Integer -> Integer
+ans n = foldr1 (+) $ map (\c -> read [c] :: Integer) $ show $ fact n where
+  fact m = foldr1 (*) [1..m]
 
-main = do
-  print $ ans 100
+main :: IO ()
+main = print $ ans 100
+

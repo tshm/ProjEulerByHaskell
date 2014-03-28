@@ -1,4 +1,4 @@
-module P22 where
+module Main where
 import Text.Regex
 import Data.List
 
@@ -9,10 +9,8 @@ import Data.List
 --
 -- >>> evalScore "COLIN"
 -- 53
---
--- >>> loadNames "names.txt" >>= (return . sum . scores)
--- ?
 
+scores :: [String] -> [Int]
 scores xs = map score xss where
   score (i,s) = i * evalScore s
   xss = zip [1..] xs
@@ -21,12 +19,18 @@ splitNames :: String -> [String]
 splitNames s = init $ tail $ splitRegex sep s where
   sep = mkRegex "\"(,\")?"
 
+loadNames :: FilePath -> IO [String]
 loadNames fn = readFile fn >>= (return . sort . splitNames)
 
+evalScore :: String -> Int
 evalScore = foldr (\c acc -> charScore c + acc ) 0
+
+charScore :: Char -> Int
 charScore c = case elemIndex c ['A'..'Z'] of
   Just n -> n + 1
   Nothing -> 0
 
 --readFile "names.txt" >>= (print . loadNames)
 
+main :: IO ()
+main = loadNames "names.txt" >>= (print . sum . scores)

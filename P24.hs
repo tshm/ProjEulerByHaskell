@@ -1,5 +1,4 @@
-module P24 where
-import Debug.Trace
+module Main where
 -- A permutation is an ordered arrangement of objects.
 -- For example, 3124 is one possible permutation of
 -- the digits 1, 2, 3 and 4. If all of the permutations
@@ -27,26 +26,27 @@ import Debug.Trace
 --
 -- >>> flatten $ perm [0..2] 3
 -- ["012","021","102","120","201","210"]
---
--- >>> head $ drop 999999 $ flatten $ perm [0..9] 10
 
-flatten xxs = map concat xxs where
-  concat xs = foldl (\acc x -> acc ++ (show x)) "" xs
+flatten :: [[Int]] -> [[Char]]
+flatten xxs = map concat' xxs where
+  concat' xs = foldl (\acc x -> acc ++ (show x)) "" xs
 
 perm :: [Int] -> Int -> [[Int]]
 perm _ 0 = [[]]
 perm xs n = concatMap ff xs where
   ff :: Int -> [[Int]]
   ff x = pair x $ perm (exclude x xs) (n-1)
-  exclude x xs = (filter (x>) xs) ++ (filter (x<) xs)
+  exclude x xs' = (filter (x>) xs') ++ (filter (x<) xs')
 
-dump xs = trace (" <"++show (xs)++"> ") xs
+-- dump xs = trace (" <"++show (xs)++"> ") xs
 
 pair :: Int -> [[Int]] -> [[Int]]
 pair x ys = map (\y -> x : y) ys
 
-comb [] ys = []
+comb :: [Int] -> [Int] -> [[Int]]
+comb [] _ = []
 comb (x:xs) ys = (map (\y -> x : [y]) ys) ++ (comb xs ys)
 
-
+main :: IO ()
+main = print $ (flatten $ perm [0..9] 10) !! 999999
 

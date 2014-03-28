@@ -1,9 +1,7 @@
-module P18 where
+module Main where
 import Data.Array
 import Text.Regex
-import Debug.Trace
 
---
 -- By starting at the top of the triangle below and moving to adjacent numbers on the row below, the maximum total from top to bottom is 23.
 --
 --    3
@@ -36,10 +34,8 @@ import Debug.Trace
 -- |
 -- >>> maximum $ map (\k -> totcost k costs) [0..(length costs - 1)]
 -- 23
---
--- >>> maximum $ map (\k -> totcost k costs2) [0..(length costs2 - 1)]
---
 
+costs :: [[Int]]
 costs = let
   r = mkRegex " +"
   readInt x = read x :: Int
@@ -49,6 +45,7 @@ costs = let
     "2 4 6",
     "8 5 9 3"]
 
+costs2 :: [[Int]]
 costs2 = let
   r = mkRegex " +"
   readInt x = read x :: Int
@@ -69,15 +66,20 @@ costs2 = let
   "63 66 04 68 89 53 67 30 73 16 69 87 40 31",
   "04 62 98 27 23 09 70 98 73 93 38 53 60 04 23"]
 
+rr :: Array (Int, Int) Int
 rr = array ((0,0), (n-1,n-1)) [((i,j), i+j)| i<-[0..n-1], j<-[0..i]] where
   n = 3
 
-totcost k costs = r ! (n, k) where
-  n = length costs - 1
-  r = array ((0,0), (n,n)) [((i,j), (acc i j)+(costs !!i !!j))| i<-[0..n], j<-[0..i]]
+totcost :: Int -> [[Int]] -> Int
+totcost k csts = r ! (n, k) where
+  n = length csts - 1
+  r = array ((0,0), (n,n)) [((i,j), (acc i j)+(csts !!i !!j))| i<-[0..n], j<-[0..i]]
   acc 0 0 = 0
   acc i j
     | j == 0    = r ! (i-1, 0)
     | i == j    = r ! (i-1, j-1)
     | otherwise = max (r ! (i-1, j)) (r ! (i-1, j-1))
+
+main :: IO ()
+main = print $ maximum $ map (\k -> totcost k costs2) [0..(length costs2 - 1)]
 

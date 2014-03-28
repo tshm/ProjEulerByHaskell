@@ -12,5 +12,5 @@ run pname = readProcess pname [] ""
 main :: IO ()
 main = (!! 0) <$> getArgs >>= \pname ->
   compile pname >>
-  (" >>> answer:"++) <$> run pname >>= putStrLn
+  (" >>> answer: "++) <$> run pname >>= putStrLn
   

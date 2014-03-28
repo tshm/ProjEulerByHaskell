@@ -1,3 +1,4 @@
+module Main where
 import Data.Array
 -- |
 -- >>> ways 5 1

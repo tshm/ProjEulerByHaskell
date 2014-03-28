@@ -1,6 +1,4 @@
-module P21 where
-import Data.List
-
+module Main where
 -- |
 -- >>> d 220
 -- 284
@@ -10,15 +8,18 @@ import Data.List
 --
 -- >>> isAmicalNumber 284
 -- True
---
--- >>> sum $ filter isAmicalNumber [2..10000]
 
+divisors :: Int -> [Int]
 divisors 1 = [1]
-divisors n = [k | k <- [1..n-1], n `mod` k == 0]
+divisors n = [k | k <- [1..n `quot` 2], n `mod` k == 0]
 
+d :: Int -> Int
 d n = foldr1 (+) $ divisors n
 
+isAmicalNumber :: Int -> Bool
 isAmicalNumber n =   n /= m && n == d m where
    m = d n
 
+main :: IO ()
+main = print $ sum $ filter isAmicalNumber [2..10000]
 

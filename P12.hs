@@ -26,6 +26,9 @@ import Data.List
 -- >>> factors $ triangleNumber 7
 -- [1,2,4,7,14,28]
 --
+-- >>> primeFactors 60
+-- [2,2,3,5]
+--
 -- >>> find (\x -> 5 < (length $ factors x)) [triangleNumber x| x<- [2..]]
 -- Just 28
 --
@@ -44,14 +47,15 @@ factors n = [ m | m <- [1..n], n `mod` m == 0 ]
 -- faster...
 factorNumber :: Integer -> Integer
 factorNumber n = foldr (*) 1 $ map (1+) $ ranks n where
-   ranks m = map (toInteger . length) $ group $ primeFactors $ m
+   ranks m = map (toInteger . length) $ group $ primeFactors m
 
 primeFactors :: Integer -> [Integer]
 primeFactors n = pfact 2 n where
   pfact p n'
     | n' < p           = []
     | n' `mod` p == 0  = p : (pfact p $ n' `quot` p)
-    | otherwise       = pfact (p+1) n'
+    | p == 2           = pfact 3 n'
+    | otherwise        = pfact (p+2) n'
 
 main :: IO ()
 main = print $ find (\x -> 500 < factorNumber x) [triangleNumber x| x<- [2..]]
