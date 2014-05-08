@@ -27,7 +27,9 @@ isCurious n = n == factSum where
   digits = map (\c -> read [c] :: Int) $ show n
 
 curiousNumbers :: [Int]
-curiousNumbers = [n | n <- [3..7*(fact 9)], isCurious n]
+curiousNumbers = [n | n <- [3..max], isCurious n] where
+  max = 7 * (fact n)
+  Just n = maxdigit
 
 main :: IO ()
 main = do
