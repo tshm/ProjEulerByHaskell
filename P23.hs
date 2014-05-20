@@ -12,21 +12,23 @@ import Data.Array
 --
 -- >>> head abundantNums 
 -- 12
-divisors :: Integer -> [Integer]
+divisors :: Int -> [Int]
 divisors n = [k | k<-[1..(n `quot` 2)], n `mod` k == 0]
 
-isAbundant :: Integer -> Bool
-isAbundant n = (sum $ divisors n) > n
+isAbundant :: Int -> Bool
+isAbundant n = sum (divisors n) > n
 
-abundantNums :: [Integer]
+abundantNums :: [Int]
 abundantNums = filter isAbundant [2..]
 
-notSumOfAbundantNums :: [Integer]
-notSumOfAbundantNums = [n | n <- [1..max'-1], False == flags ! n] where
+notSumOfAbundantNums :: [Int]
+notSumOfAbundantNums = [n | n <- [1..max'-1], not (flags ! n)] where
   flags = accumArray (||) False (1,max')
     [(i+j, True) | i <- ab, j <- ab, i+j < max' ]
   ab = takeWhile (< max') abundantNums
   max' = 28123
 
+
 main :: IO ()
 main = print $ sum notSumOfAbundantNums
+--main = print $ divisors 28121
