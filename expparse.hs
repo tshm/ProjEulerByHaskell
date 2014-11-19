@@ -1,4 +1,3 @@
-import Control.Applicative
 import System.Environment
 import Text.ParserCombinators.ReadP
 import Text.Printf
@@ -52,11 +51,13 @@ number = do
   str <- munch1 (`elem` "1234567890.")
   return $ Value (read (sign ++ str) :: Double)
 
+{--
 um :: ReadP Expr
 um = do
   _ <- char '-'
   num <- number
   return $ Um num
+--}
 
 parseToExpr :: String -> Expr
 parseToExpr = fst . last . readP_to_S expr
