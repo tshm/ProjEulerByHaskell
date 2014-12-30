@@ -1,0 +1,38 @@
+	Sat Nov 29 05:52 2014 Time and Allocation Profiling Report  (Final)
+
+	   bankcard.exe +RTS -p -RTS tmp.txt
+
+	total time  =        0.01 secs   (6 ticks @ 1000 us, 1 processor)
+	total alloc =     380,348 bytes  (excludes profiling overheads)
+
+COST CENTRE   MODULE           %time %alloc
+
+CAF           Main              50.0    0.0
+main          Main              16.7   13.2
+parse.\       Main              16.7   67.4
+CAF           GHC.IO.FD         16.7    0.0
+isValid.xs'   Main               0.0    3.0
+isValid.even' Main               0.0    1.8
+parse         Main               0.0    3.3
+CAF           GHC.IO.Handle.FD   0.0    9.1
+
+
+                                                                 individual     inherited
+COST CENTRE         MODULE                     no.     entries  %time %alloc   %time %alloc
+
+MAIN                MAIN                        44           0    0.0    0.1   100.0  100.0
+ CAF                GHC.IO.Encoding.CodePage    78           0    0.0    0.0     0.0    0.0
+ CAF                GHC.IO.FD                   76           0   16.7    0.0    16.7    0.0
+ CAF                Text.Read.Lex               73           0    0.0    0.3     0.0    0.3
+ CAF                GHC.IO.Encoding             71           0    0.0    0.0     0.0    0.0
+ CAF                System.Environment          65           0    0.0    0.1     0.0    0.1
+ CAF                GHC.IO.Handle.FD            61           0    0.0    9.1     0.0    9.1
+ CAF                Main                        51           0   50.0    0.0    83.3   90.4
+  main              Main                        88           1   16.7   13.2    33.3   90.4
+   parse            Main                        92           5    0.0    3.3    16.7   70.7
+    parse.\         Main                        95          81   16.7   67.4    16.7   67.4
+   isValid          Main                        89           5    0.0    0.7     0.0    6.5
+    isValid.xs'     Main                        91           5    0.0    3.0     0.0    4.8
+     isValid.even'  Main                        94          81    0.0    1.8     0.0    1.8
+    isValid.xs''    Main                        90           5    0.0    0.9     0.0    1.0
+     isValid.xs''.\ Main                        93          81    0.0    0.0     0.0    0.0
