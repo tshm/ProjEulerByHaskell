@@ -1,12 +1,14 @@
 -- | test and answer seek runner
-import System.Environment
-import System.Process
+import System.Environment (getArgs)
+import System.Process (readProcess)
 
 compile :: String -> IO String
-compile pname = readProcess "ghc" ["-O", "-Wall", pname ++ ".hs"] ""
+compile pname =
+  readProcess "ghc" ["-O", "-Wall", pname ++ ".hs"] ""
 
 run :: String -> IO String
-run pname = readProcess pname [] ""
+run pname =
+  readProcess pname [] ""
 
 main :: IO ()
 main = do

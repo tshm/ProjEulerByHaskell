@@ -4,6 +4,7 @@ import System.Environment (getArgs)
 -- >>> ageGrp 5
 -- "Elementary school"
 --
+--
 ageGrp :: Int -> String
 ageGrp x
   | 0 <= x && x <= 2    = "Still in Mama's arms"
