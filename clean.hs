@@ -6,7 +6,7 @@ import Data.Char (isLetter, toLower)
 -- "hello world"
 --
 -- >>> clean "Can 0$9 ---you~"
--- "can you"
+-- "can you "
 --
 -- >>> clean "13What213are;11you-123+138doing7"
 -- "what are you doing"
