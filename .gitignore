@@ -3,3 +3,4 @@
 *.hi
 tmp.txt
 *.vim
+.vscode/
