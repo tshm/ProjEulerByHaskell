@@ -41,7 +41,7 @@ perm n = map (1:) $ perm' xe xo where
 -- >>> numconspr 4
 -- 2 
 --
--- >>> numconspr 5
+-- >>> sum $ map numconspr [1,3,5,7,9,11,13,15,17,18,19,20]
 -- 0 
 --
 -- >>> numconspr 6
