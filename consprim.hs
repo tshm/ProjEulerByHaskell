@@ -1,5 +1,4 @@
 import System.Environment (getArgs)
-import Data.List (partition)
 --import Data.List (partition, permutations)
 --import Data.Maybe (mapMaybe)
 --import Debug.Trace (trace)
@@ -28,24 +27,21 @@ primes = 2 : sieve [3,5..] where
 --
 perm :: Int -> [[Int]]
 perm n = map (1:) $ perm' xe xo where
-  (xe,xo) = partition even [2..n]
+  (xe,xo) = ([2,4..n], [3,5..n])
   perm' [] xs = [xs]
   perm' xs [] = [xs]
   perm' xs xs' = 
    let
      sublist x = map (x:) $ perm' xs' (except x)
-     except x = filter (/=x) xs
+     except x = l ++ r where (l,_:r) = break (==x) xs
    in foldl1 (++) $ map sublist xs
 
 -- | obviously n has to be odd in order the answer to be non-zero.
--- >>> numconspr 4
--- 2 
+-- >>> all (==0) $ map numconspr [1,3,5,7,9,11,13,15,17,18,19,20]
+-- True 
 --
--- >>> sum $ map numconspr [1,3,5,7,9,11,13,15,17,18,19,20]
--- 0 
---
--- >>> numconspr 6
--- 2
+-- >>> map numconspr [2,4,6,8]
+-- [1,2,2,4]
 --
 -- >>> numconspr 12
 -- 1024
